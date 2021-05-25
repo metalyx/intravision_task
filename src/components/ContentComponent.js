@@ -10,6 +10,7 @@ class Content extends Component {
         this.requestRef = React.createRef(<Request/>);
 
         this.renderRequests = this.renderRequests.bind(this);
+        console.log(this.props)
     }
 
     createRequest() {
@@ -42,7 +43,12 @@ class Content extends Component {
                 postNewRequest={this.props.postNewRequest}
                 status={this.props.status}
                 users={this.props.users}
-                putRequest={this.props.putRequest}/>
+                putRequest={this.props.putRequest}
+                fetchRequests={this.props.fetchRequests}
+                fetchPriorities={this.props.fetchPriorities}
+                fetchStatus={this.props.fetchStatus}
+                fetchUsers={this.props.fetchUsers}
+                getExactRequest={(id) => this.props.getExactRequest(id)}/>
                 
             }
             else {
@@ -53,6 +59,7 @@ class Content extends Component {
     }
 
     renderRequests() {
+        
         const requests = this.props.requests.value;
         const priorities = this.props.priorities.priorities;
         if(requests !== undefined){
@@ -89,7 +96,11 @@ class Content extends Component {
     }
 
     render () {
-        
+        console.log(this.props.requests)
+        if(this.props.requests === undefined) {
+            return <></>
+        }
+        else {
         return(
             <div className="content_container">
                 <div className="content_new_request">
@@ -113,6 +124,7 @@ class Content extends Component {
                 
             
         );
+        }
     }
 }
 

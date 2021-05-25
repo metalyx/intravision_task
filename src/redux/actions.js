@@ -253,8 +253,9 @@ export const putRequest = (data) => (dispatch) => {
         var errmess = new Error(error.message);
         throw errmess;
     })
+    
         // .then(response => response.json())
-        .then(response => response)
+        
         // .then(response => console.log(response));
         // .then()
         // .then(result => dispatch(getExactRequest(result)))

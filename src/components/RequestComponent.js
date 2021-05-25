@@ -52,35 +52,85 @@ class Request extends Component {
         
     }
 
+    printMonth(months) {
+        
+        switch(parseInt(months)) {
+            case 1:
+               return "января";
+            case 2:
+                return "февраля";
+            case 3:
+                return "марта";
+            case 4:
+                return "апреля";
+            case 5:
+                return "мая";
+            case 6:
+                return "июня";
+            case 7:
+                return "июля";
+            case 8:
+                return "августа";
+            case 9:
+                return "сентября";
+            case 10:
+                return "октября";
+            case 11:
+                return "ноября";
+            case 12:
+                return "декабря";
+        }
+    }
+
+    printDate (date) {
+        var days = date.getDate();
+        var months = date.getMonth();
+        var hours = date.getHours();
+        var minutes = date.getMinutes();
+        months = this.printMonth(months);
+        
+        if (minutes < 10) {
+            minutes = "0" + minutes;
+        }
+        
+        var result = days + " " + months + ", " + hours + ":" + minutes + " прокомментировал";
+        return result;
+    }
+
     outputComments(comments) {
         if (comments !== undefined){
             
             var output = comments.map((item) => {
                 var date = item.createdAt;
                 date = new Date(date);
-                var days = date.getDate();
-                var months = date.getMonth();
+                // var days = date.getDate();
+                // var months = date.getMonth();
                 
-                var years = date.getFullYear();
-                if (days < 10) {
-                    days = "0" + days;
-                }
-                if (months < 10) {
-                    months = "0" + months;
-                }
-                date = days + "." + months + "." + years + "г." ;
+                // var years = date.getFullYear();
+                // if (days < 10) {
+                //     days = "0" + days;
+                // }
+                // if (months < 10) {
+                //     months = "0" + months;
+                // }
+                // date = days + "." + months + "." + years + "г." ;
+
+                date = this.printDate(date);
+
+
+
                 return (
-                    <>
+                    <div className="main_comment_exact">
                         <div>
                             {item.userName}
                         </div>
-                        <div>
+                        <div className="comment_date">
                             {date}
                         </div>
-                        <div>
+                        <div className="comment_text">
                             {item.comment}
                         </div>
-                    </>
+                    </div>
                 );
             })
         }
@@ -213,6 +263,12 @@ class Request extends Component {
             this.setState({
                 isOpen: true
             })
+            // this.props.fetchRequests();
+            // this.props.fetchPriorities();
+            // this.props.fetchStatus();
+            // this.props.fetchUsers();
+            // this.props.getExactRequest(_id);
+            
             
         }
         else {
@@ -335,7 +391,10 @@ class Request extends Component {
                         <div><button onClick={this.putRequest}>Сохранить</button></div>
                     </div>
                     <div>
-                        {this.outputComments(request.lifetimeItems)}
+                        <div></div>
+                        <div className="request_main_comment">
+                            {this.outputComments(request.lifetimeItems)}
+                        </div>
                     </div>
                 </div>
                 <div className="request_aside">

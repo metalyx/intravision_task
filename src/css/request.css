@@ -57,7 +57,38 @@
     background-color: #ecf3f7;
     padding-left: 55px;
 }
-
+.request_main div:first-child {
+    display: -webkit-box;
+   -webkit-line-clamp: 6;
+   -webkit-box-orient: vertical;
+   overflow: hidden;
+   padding-bottom: 12px;
+}
+.request_main div:nth-child(3){
+    display: flex;
+}
+.request_main_comment {
+    display: flex;
+    flex-direction: column;
+}
+.request_main_comment div {
+    margin: 10px;
+}
+.comment_text {
+    background-color: #e3e9f4;
+    border-radius: 5px;
+}
+.comment_date {
+    color: #63677c;
+    font-size: 12px;
+}
+.main_comment_exact div{
+    margin: 0;
+}
+.main_comment_exact{
+    padding: 0;
+    display: block !important;
+}
 .request_aside {
     border-left: 1px solid #d7dce0;
     background-color: #ecf3f7;

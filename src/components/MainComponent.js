@@ -5,6 +5,7 @@ import Search from './SearchComponent';
 import '../css/main.css';
 import { fetchRequests, openChangeRequest, closeChangeRequest, getExactRequest, fetchPriorities, postNewRequest, fetchStatus, fetchUsers, putRequest} from '../redux/actions';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 
 
 const mapStateToProps = state => {
@@ -38,6 +39,7 @@ class Main extends Component {
         this.props.fetchPriorities();
         this.props.fetchStatus();
         this.props.fetchUsers();
+        console.log("componentDidMount")
     }
 
     render () {
@@ -45,20 +47,23 @@ class Main extends Component {
         return (
             
                 <div className="container">
-                    <Menu className="menu" />
+                    <Menu className="menu"
+                     requests={this.props.requests.requests}
+                     exactRequest={this.props.exactRequest}
+                     getExactRequest={this.props.getExactRequest}
+                     openChangeRequest={this.props.openChangeRequest}
+                     closeChangeRequest={this.props.closeChangeRequest}
+                     priorities={this.props.priorities}
+                     postNewRequest={this.props.postNewRequest}
+                     status={this.props.status}
+                     users={this.props.users}
+                     putRequest={this.props.putRequest}
+                     fetchRequests={this.props.fetchRequests}
+                     fetchPriorities={this.props.fetchPriorities}
+                     fetchStatus={this.props.fetchStatus}
+                     fetchUsers={this.props.fetchUsers}/>
                     <Search className="search" />
-                    <Content className="content"
-                    requests={this.props.requests.requests}
-                    exactRequest={this.props.exactRequest}
-                    getExactRequest={this.props.getExactRequest}
-                    openChangeRequest={this.props.openChangeRequest}
-                    closeChangeRequest={this.props.closeChangeRequest}
-                    priorities={this.props.priorities}
-                    postNewRequest={this.props.postNewRequest}
-                    status={this.props.status}
-                    users={this.props.users}
-                    putRequest={this.props.putRequest}
-                    />
+                    {/* <Content className="content" /> */}
                     
                 </div>
             
