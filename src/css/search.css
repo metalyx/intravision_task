@@ -1,0 +1,28 @@
+.search_container {
+    width: 1505px;
+    height: 65px;
+    background-color: #d1e0ed;
+    display: flex;
+    align-items: center;
+    grid-area: search;
+}
+
+.search_input {
+    display: flex;
+    align-items: center;
+    width: 680px;
+    height: 40px;
+    padding-left: 17px;
+}
+
+.search_input input {
+    width: 680px;
+    height: 100%;
+    border-radius: 20px;
+    outline: none;
+    border: 1px solid #42aaff;
+    padding-left: 20px;
+    padding-right: 35px;
+    background: url(../shared/images/search.png) no-repeat 98% 10px;
+}
+

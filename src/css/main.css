@@ -1,0 +1,27 @@
+body {
+    overflow-y: hidden;
+}
+.container {
+    display: grid;
+    grid-template-columns: 95px 1fr;
+    grid-template-rows: 65px 1fr;
+    grid-template-areas: 
+        "menu search"
+        "menu content";
+    height: 850px;
+    width: 1600px;
+    margin: 0;
+    
+}
+.menu {
+    grid-area: menu;
+}
+
+.content {
+    grid-area: content;
+}
+
+.search {
+    grid-area: search;
+    
+}
