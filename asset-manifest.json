@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/intravision_task/static/css/main.56081d01.chunk.css",
+    "main.js": "/intravision_task/static/js/main.e105562f.chunk.js",
+    "main.js.map": "/intravision_task/static/js/main.e105562f.chunk.js.map",
+    "runtime-main.js": "/intravision_task/static/js/runtime-main.c5fc06b3.js",
+    "runtime-main.js.map": "/intravision_task/static/js/runtime-main.c5fc06b3.js.map",
+    "static/js/2.0000e597.chunk.js": "/intravision_task/static/js/2.0000e597.chunk.js",
+    "static/js/2.0000e597.chunk.js.map": "/intravision_task/static/js/2.0000e597.chunk.js.map",
+    "static/js/3.012e90ce.chunk.js": "/intravision_task/static/js/3.012e90ce.chunk.js",
+    "static/js/3.012e90ce.chunk.js.map": "/intravision_task/static/js/3.012e90ce.chunk.js.map",
+    "index.html": "/intravision_task/index.html",
+    "static/css/main.56081d01.chunk.css.map": "/intravision_task/static/css/main.56081d01.chunk.css.map",
+    "static/js/2.0000e597.chunk.js.LICENSE.txt": "/intravision_task/static/js/2.0000e597.chunk.js.LICENSE.txt",
+    "static/media/App.css": "/intravision_task/static/media/Roboto-Regular.a8d6ac03.ttf"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.c5fc06b3.js",
+    "static/js/2.0000e597.chunk.js",
+    "static/css/main.56081d01.chunk.css",
+    "static/js/main.e105562f.chunk.js"
+  ]
+}
