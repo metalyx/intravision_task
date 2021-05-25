@@ -1,8 +1,9 @@
 
 
 .content_container {
-   height: 785px;
-   width: 1505px;
+   /* height: 785px; */
+   height: 90vh;
+   width: 100%;
    background-color: #ffffff;
    grid-area: content;
    display: flex;
@@ -77,8 +78,19 @@ p {
    width: 65%;
    z-index: 1;
    display: flex;
-   
-   
+   transition: margin 1s;
+   animation: change_request 0.5s;
+}
+
+@keyframes change_request {
+   from{
+      margin-left: 0;
+      opacity: 0;
+   }
+   to{
+      margin-left: -65%;
+      opacity: 1;
+   }
 }
 
 .content_new_request {

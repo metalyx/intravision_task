@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import '../css/request.css';
-import ChangesSuccess from './ChangesSuccess';
 
 var _id = 0;
 
@@ -17,7 +16,7 @@ class Request extends Component {
         this.handleComment = this.handleComment.bind(this);
         this.handleStatus = this.handleStatus.bind(this);
         this.handleExecutor = this.handleExecutor.bind(this);
-        this.openModal = this.openModal.bind(this);
+        // this.openModal = this.openModal.bind(this);
         
         
         this.state = {
@@ -26,7 +25,7 @@ class Request extends Component {
             selectedStatus: this.props.request.request.statusName,
             comment: "",
             selectedExecutor: this.props.request.request.executorName,
-            isOpen: false,
+            // isOpen: false,
         }
        
         _id = this.props.request.request.id;
@@ -79,6 +78,8 @@ class Request extends Component {
                 return "ноября";
             case 12:
                 return "декабря";
+            default:
+                return "";
         }
     }
 
@@ -101,6 +102,10 @@ class Request extends Component {
         if (comments !== undefined){
             
             var output = comments.map((item) => {
+                if (item.comment === null) {
+                    return <></>
+                }
+
                 var date = item.createdAt;
                 date = new Date(date);
                 // var days = date.getDate();
@@ -118,17 +123,20 @@ class Request extends Component {
                 date = this.printDate(date);
 
 
-
+                
                 return (
-                    <div className="main_comment_exact">
-                        <div>
-                            {item.userName}
-                        </div>
-                        <div className="comment_date">
-                            {date}
-                        </div>
-                        <div className="comment_text">
-                            {item.comment}
+                    <div key={item.id} className="main_comment_comment">
+                        <div className="circle_comment"></div>
+                        <div className="main_comment_exact">
+                            <div>
+                                {item.userName}
+                            </div>
+                            <div className="comment_date">
+                                {date}
+                            </div>
+                            <div className="comment_text">
+                                {item.comment}
+                            </div>
                         </div>
                     </div>
                 );
@@ -145,7 +153,7 @@ class Request extends Component {
         if(tags !== undefined) {
             var output = tags.map((item) => {
                 return (
-                    <div>{item.name}</div>
+                    <div key={item.id}>{item.name}</div>
                 );
             });
             return output;
@@ -190,7 +198,7 @@ class Request extends Component {
             }
             else{
                 return (
-                    <option value={item.name}>{item.name}</option>
+                    <option key={item.id} value={item.name}>{item.name}</option>
                 );
             }
         })
@@ -207,7 +215,7 @@ class Request extends Component {
             }
             else {
                 return (
-                    <option value={item.name}>{item.name}</option>
+                    <option key={item.id} value={item.name}>{item.name}</option>
                 );
             }
         })
@@ -260,9 +268,9 @@ class Request extends Component {
             
             this.props.putRequest(JSON.stringify(result));
             
-            this.setState({
-                isOpen: true
-            })
+            // this.setState({
+            //     isOpen: true
+            // })
             // this.props.fetchRequests();
             // this.props.fetchPriorities();
             // this.props.fetchStatus();
@@ -277,20 +285,20 @@ class Request extends Component {
     }
 
    
-    openModal() {
+    // openModal() {
         
-        if (this.state.isOpen) {
-            console.log("1")
+    //     if (this.state.isOpen) {
+    //         console.log("1")
             
-            return <ChangesSuccess isOpen={this.state.isOpen}/>
+    //         return <ChangesSuccess isOpen={this.state.isOpen}/>
            
-        }
-        else {
-            return <></>
-        }
+    //     }
+    //     else {
+    //         return <></>
+    //     }
         
         
-    }
+    // }
 
     handleComment({target: {value}}) {
         this.setState({
@@ -339,8 +347,8 @@ class Request extends Component {
                             <div><p>Описание</p></div>
                             <textarea className="request_new_textarea2" onChange={this.handleNewRequestDescription} value={this.state.newRequestDescription}></textarea>
                         </div>
-                        <div>
-                            <div><button onClick={this.submitNewRequest}>Сохранить</button></div>
+                        <div className="request_main_button">
+                            <button onClick={this.submitNewRequest}>Сохранить</button>
                         </div>
                     </form>
                    
@@ -379,7 +387,7 @@ class Request extends Component {
                     </div>
                 </div>
                 <div className="request_main">
-                    <div>
+                    <div className="request_main_description">
                         <div><p>Описание</p></div>
                         <div>{request.description}</div>
                     </div>
@@ -390,8 +398,8 @@ class Request extends Component {
                         </div>
                         <div><button onClick={this.putRequest}>Сохранить</button></div>
                     </div>
-                    <div>
-                        <div></div>
+                    <div className="request_main_comments">
+                        
                         <div className="request_main_comment">
                             {this.outputComments(request.lifetimeItems)}
                         </div>
@@ -424,7 +432,7 @@ class Request extends Component {
                             {/* {request.executorName} */}
                             <form>
                                 <select value={this.state.selectedExecutor} onChange={this.handleExecutor}>
-                                    <option value={request.executorName}>{request.executorName}</option>
+                                    <option key={request.executorId} value={request.executorName}>{request.executorName}</option>
                                     {this.outputExecutor(request.executorId)}
                                 </select>
                             </form>
@@ -450,14 +458,17 @@ class Request extends Component {
     }
 
     render () {
-        if (this.props.request.isLoading) {
+        
+        var req = this.props.request.request;
+        if (req === undefined) {
             return <></>
         }
         else {
             if(this.state.isOpen) {
+                console.log("HERE")
                 this.closeRequest();
                 return (
-                    <ChangesSuccess isOpen={true} />
+                    <></>
                 );
             }
             else {

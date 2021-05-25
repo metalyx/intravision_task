@@ -1,4 +1,3 @@
-import Request from '../components/RequestComponent';
 import { api_getRequests, api_getExactRequest, api_getPriorities, api_getStatus, api_postNewRequest, api_getUsers, api_putRequest } from '../shared/api/api';
 
 export const requestsLoading = () => ({
@@ -240,7 +239,8 @@ export const putRequest = (data) => (dispatch) => {
     })
     .then(response => {
         if(response.ok) {
-            return response;
+            // return response;
+            window.location.reload();
         }
         else {
             var error = new Error('SERVER ERROR ' + response.status + ': ' + response.statusText);

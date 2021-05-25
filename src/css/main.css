@@ -1,5 +1,6 @@
 body {
     overflow-y: hidden;
+    margin: 0;
 }
 .container {
     display: grid;
@@ -8,9 +9,12 @@ body {
     grid-template-areas: 
         "menu search"
         "menu content";
-    height: 850px;
-    width: 1600px;
+    /* height: 850px;
+    width: 1600px; */
     margin: 0;
+    height: 100vh;
+    width: 100vw;
+    box-sizing: border-box;
     
 }
 .menu {

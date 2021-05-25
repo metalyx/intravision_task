@@ -4,7 +4,8 @@
     display: flex;
     flex-direction: column;
     width: 95px;
-    height: 850px;
+    /* height: 850px; */
+    height: 100%;
     background-color: #002137;
     grid-area: menu;
     
@@ -31,12 +32,14 @@
 .menu_container div p {
     color: #ffffff;
     font-size: 12px;
+    text-decoration: none !important;
 }
-.menu_container div:hover{
-    background-color: #002c49;
-    cursor: pointer;
+.menu_container a:hover{
+    background-color: #002c49 !important;
+    cursor: pointer !important;
+    text-decoration: none !important;
 }
-.menu_container div:nth-child(1):hover {
-    background-color: #002137;
-    cursor: default;
-}
+/* .menu_container div:nth-child(1):hover {
+    background-color: #002137 ;
+    cursor: default ;
+} */

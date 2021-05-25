@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import '../css/content.css'
+import Loading from './LoadingComponent';
 import Request from './RequestComponent';
 
 class Content extends Component {
@@ -10,7 +11,6 @@ class Content extends Component {
         this.requestRef = React.createRef(<Request/>);
 
         this.renderRequests = this.renderRequests.bind(this);
-        console.log(this.props)
     }
 
     createRequest() {
@@ -65,7 +65,11 @@ class Content extends Component {
         if(requests !== undefined){
             var allRequests = requests.map((item) => {
                 var color = priorities.filter((prio) => prio.id === item.priorityId)[0];
-                color = color.rgb;
+                if(color === undefined) {
+                    return <></>
+                }
+                else {
+                    color = color.rgb;
                 
                 
                     return (
@@ -78,14 +82,14 @@ class Content extends Component {
                         </div>
                         
                     );
-                
+                }
             })
             
            return allRequests;
            
         }
         else {
-            return <></>;
+            return <Loading />;
         }
         
         
@@ -96,7 +100,7 @@ class Content extends Component {
     }
 
     render () {
-        console.log(this.props.requests)
+       
         if(this.props.requests === undefined) {
             return <></>
         }

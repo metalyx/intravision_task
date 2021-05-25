@@ -1,11 +1,9 @@
 import React, {Component} from 'react';
-import Content from './ContentComponent';
 import Menu from './MenuComponent';
 import Search from './SearchComponent';
 import '../css/main.css';
 import { fetchRequests, openChangeRequest, closeChangeRequest, getExactRequest, fetchPriorities, postNewRequest, fetchStatus, fetchUsers, putRequest} from '../redux/actions';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
 
 
 const mapStateToProps = state => {
@@ -39,8 +37,8 @@ class Main extends Component {
         this.props.fetchPriorities();
         this.props.fetchStatus();
         this.props.fetchUsers();
-        console.log("componentDidMount")
     }
+
 
     render () {
         
