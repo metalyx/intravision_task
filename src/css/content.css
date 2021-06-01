@@ -20,6 +20,11 @@
    margin-top: 70px;
    
 }
+.content_main::-webkit-scrollbar {
+   width: 0;
+   
+   
+}
 
 .content_request__card {
    display: grid;
@@ -72,26 +77,19 @@ p {
    overflow: hidden;
 }
 .content_request {
-   margin-left: -65%; 
+   /* margin-left: -100vw;  */
    background-color: #ecf3f7;
-   height: 100%;
-   width: 65%;
+   height: 94%;
+   /* width: 65%; */
+   width: 902px;
    z-index: 1;
    display: flex;
-   transition: margin 1s;
-   animation: change_request 0.5s;
+   position: absolute;
+   right: 0;
+   
 }
 
-@keyframes change_request {
-   from{
-      margin-left: 0;
-      opacity: 0;
-   }
-   to{
-      margin-left: -65%;
-      opacity: 1;
-   }
-}
+
 
 .content_new_request {
    position: absolute;

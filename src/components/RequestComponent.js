@@ -108,18 +108,7 @@ class Request extends Component {
 
                 var date = item.createdAt;
                 date = new Date(date);
-                // var days = date.getDate();
-                // var months = date.getMonth();
                 
-                // var years = date.getFullYear();
-                // if (days < 10) {
-                //     days = "0" + days;
-                // }
-                // if (months < 10) {
-                //     months = "0" + months;
-                // }
-                // date = days + "." + months + "." + years + "г." ;
-
                 date = this.printDate(date);
 
 
@@ -172,7 +161,14 @@ class Request extends Component {
             description: state.newRequestDescription
         }
         
-        this.props.postNewRequest(JSON.stringify(data));
+        if(data.name == "") {
+
+        }
+        else{
+            this.props.postNewRequest(JSON.stringify(data));
+        }
+
+        
         
     }
 
@@ -283,22 +279,6 @@ class Request extends Component {
             console.log("Nothing has changed")
         }
     }
-
-   
-    // openModal() {
-        
-    //     if (this.state.isOpen) {
-    //         console.log("1")
-            
-    //         return <ChangesSuccess isOpen={this.state.isOpen}/>
-           
-    //     }
-    //     else {
-    //         return <></>
-    //     }
-        
-        
-    // }
 
     handleComment({target: {value}}) {
         this.setState({

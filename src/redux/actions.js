@@ -14,6 +14,7 @@ export const addRequests = (requests) => ({
     payload: requests
 });
 
+// Получение всех заявок
 export const fetchRequests = () => (dispatch) => {
     
     return fetch(api_getRequests)
@@ -37,6 +38,7 @@ export const fetchRequests = () => (dispatch) => {
         .catch(error => dispatch(requestsFailed(error.message)));
 }
 
+// получение всех приоритетов
 export const fetchPriorities = () => (dispatch) => {
     return fetch(api_getPriorities)
     .then(response => {
@@ -59,6 +61,7 @@ export const fetchPriorities = () => (dispatch) => {
         .catch(error => dispatch(prioritiesFailed(error.message)));
 }
 
+// получение всех статусов
 export const fetchStatus = () => (dispatch) => {
     return fetch(api_getStatus)
     .then(response => {
@@ -108,7 +111,7 @@ export const prioritiesFailed = (errmess) => ({
 });
 
 
-
+// получение конкретной заявки для редактирования
 export const getExactRequest = (id) => (dispatch) => {
     if(id === -1) {
         dispatch(addExactRequest([]))
@@ -160,6 +163,7 @@ export const watchChangeRequest = () => ({
     type: 'WATCH_CHANGE_REQUEST',
 })
 
+// пуш заявки
 export const postNewRequest = (data) => (dispatch) => {
     return fetch(api_postNewRequest, {
         method: 'POST',
@@ -193,6 +197,7 @@ export const postNewRequest = (data) => (dispatch) => {
         .catch(error => dispatch(exactRequestFailed(error.message)));
 }
 
+// получение всех пользователей
 export const fetchUsers = () => (dispatch) => {
     return fetch(api_getUsers)
     .then(response => {
@@ -229,6 +234,7 @@ export const usersLoading = () => ({
     type: 'USERS_LOADING'
 });
 
+// пуш заявки после редактирования
 export const putRequest = (data) => (dispatch) => {
     return fetch(api_putRequest, {
         method: 'PUT',
@@ -254,12 +260,5 @@ export const putRequest = (data) => (dispatch) => {
         throw errmess;
     })
     
-        // .then(response => response.json())
-        
-        // .then(response => console.log(response));
-        // .then()
-        // .then(result => dispatch(getExactRequest(result)))
-        // .then(result => dispatch(addExactRequest(result.payload)))
-        
-        // .catch(error => dispatch(exactRequestFailed(error.message)));
+     
 }

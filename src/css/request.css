@@ -8,6 +8,7 @@
 
 .request_grid {
     width: 100%;
+    
     display: grid;
     grid-template-columns: 1fr 240px;
     grid-template-rows: 60px 600px;
@@ -17,7 +18,9 @@
     overflow-y: scroll;
 
 }
-
+.request_grid::-webkit-scrollbar {
+    width: 0;
+}
 .request_header {
     grid-area: header;
     display: grid;
