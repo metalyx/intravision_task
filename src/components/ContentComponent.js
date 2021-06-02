@@ -37,7 +37,7 @@ class Content extends Component {
             if(isOpen === true) {
                 
                 
-                return <Request 
+                return <Request key={this.props.exactRequest.request.id} 
                 request={this.props.exactRequest}
                 closeChangeRequest={this.props.closeChangeRequest}
                 postNewRequest={this.props.postNewRequest}

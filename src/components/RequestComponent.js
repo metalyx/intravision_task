@@ -16,24 +16,28 @@ class Request extends Component {
         this.handleComment = this.handleComment.bind(this);
         this.handleStatus = this.handleStatus.bind(this);
         this.handleExecutor = this.handleExecutor.bind(this);
-        // this.openModal = this.openModal.bind(this);
-        
-        
+        this.saveComment = this.saveComment.bind(this);
+
         this.state = {
             newRequestName: "",
             newRequestDescription: "",
             selectedStatus: this.props.request.request.statusName,
             comment: "",
             selectedExecutor: this.props.request.request.executorName,
-            // isOpen: false,
+            
         }
-       
         _id = this.props.request.request.id;
     }
    
-    
     componentDidUpdate() {
+        if(this.state.selectedStatus !== this.props.request.request.statusName && this.state.selectedStatus !== undefined) {
+            this.putRequest();
+        }
+        if(this.state.selectedExecutor !== this.props.request.request.executorName && this.state.selectedExecutor !== undefined) {
+            this.putRequest();
+        }
         if(_id !== this.props.request.request.id){
+            
             _id = this.props.request.request.id;
             this.setState({
                 selectedStatus: this.props.request.request.statusName,
@@ -45,12 +49,8 @@ class Request extends Component {
     }
 
     closeRequest() {
-        
         this.props.closeChangeRequest();
-        
-        
     }
-
     printMonth(months) {
         
         switch(parseInt(months)) {
@@ -89,30 +89,23 @@ class Request extends Component {
         var hours = date.getHours();
         var minutes = date.getMinutes();
         months = this.printMonth(months);
-        
         if (minutes < 10) {
             minutes = "0" + minutes;
         }
-        
         var result = days + " " + months + ", " + hours + ":" + minutes + " прокомментировал";
         return result;
     }
 
     outputComments(comments) {
         if (comments !== undefined){
-            
             var output = comments.map((item) => {
                 if (item.comment === null) {
                     return <></>
                 }
-
                 var date = item.createdAt;
                 date = new Date(date);
-                
                 date = this.printDate(date);
 
-
-                
                 return (
                     <div key={item.id} className="main_comment_comment">
                         <div className="circle_comment"></div>
@@ -137,12 +130,12 @@ class Request extends Component {
         
         return output;
     }
-
     outputTags(tags) {
         if(tags !== undefined) {
             var output = tags.map((item) => {
                 return (
                     <div key={item.id}>{item.name}</div>
+                    
                 );
             });
             return output;
@@ -152,7 +145,6 @@ class Request extends Component {
         }
        
     }
-
     submitNewRequest(e) {
         e.preventDefault();
         var state = this.state;
@@ -162,33 +154,26 @@ class Request extends Component {
         }
         
         if(data.name == "") {
-
         }
         else{
             this.props.postNewRequest(JSON.stringify(data));
         }
-
-        
-        
     }
-
     handleNewRequestName = ({target : { value }}) => {
         this.setState({
             newRequestName: value
         })
     }
-
     handleNewRequestDescription = ({target : { value }}) => {
         this.setState({
             newRequestDescription: value
         })
     }
-
     outputSelect(selectedId) {
         const statuses = this.props.status.status;
         
     
-        var result = statuses.map((item) => {
+        let result = statuses.map((item) => {
             if (item.id === selectedId) {
                 return <></>
             }
@@ -201,11 +186,10 @@ class Request extends Component {
         
         return result;
     }
-
     outputExecutor(selectedId) {
         const executors = this.props.users.users;
         
-        var result = executors.map((item) => {
+        let result = executors.map((item) => {
             if (item.id === selectedId) {
                 return <></>
             }
@@ -217,10 +201,9 @@ class Request extends Component {
         })
         return result;
     }
-
     putRequest() {
         var status = this.state.selectedStatus;
-        var comment = this.state.comment;
+        
         var executor = this.state.selectedExecutor;
         var exactRequest = this.props.request.request;
 
@@ -236,70 +219,61 @@ class Request extends Component {
                 executorId: executorId
             }
         }
-        
-        
-        if (comment !== "" && comment !== undefined) {
-            result = {
-                ...result,
-                comment: comment
-            }
-        }
-        
         if(status !== undefined) {
             var statusId = statuses.filter((item) => item.name === status)[0];
+            console.log(status);
             statusId = statusId.id;
             result = {
                 ...result,
                 statusId: statusId
             }
         }
-        
-        
-        if (result.statusId !== null || result.executorId !== null || result.comment !== undefined) {
+        if (result.statusId !== null || result.executorId !== null) {
             result = {
                 ...result,
                 id: exactRequest.id
             }
-           
-            
-            this.props.putRequest(JSON.stringify(result));
-            
-            // this.setState({
-            //     isOpen: true
-            // })
-            // this.props.fetchRequests();
-            // this.props.fetchPriorities();
-            // this.props.fetchStatus();
-            // this.props.fetchUsers();
-            // this.props.getExactRequest(_id);
-            
-            
+            this.props.putRequest(result);   
         }
         else {
             console.log("Nothing has changed")
         }
     }
-
     handleComment({target: {value}}) {
         this.setState({
             comment: value
         })
-        
     }
-
     handleStatus({target: {value}}) {
+        
         this.setState({
             selectedStatus: value
         })
     }
-
     handleExecutor ({target: {value}}) {
         this.setState({
             selectedExecutor: value
         })
     }
+    saveComment () {
+        let comment = this.state.comment;
+        if (comment !== "" && comment !== undefined) {
+            let exactRequest = this.props.request.request;
+            
+            let result = {
+                comment: comment,
+                id: exactRequest.id,
+                statusId: this.props.request.request.statusId,
+                executorId: this.props.request.request.executorId
 
-    
+            }
+            console.log(result);
+            this.props.putRequest(result);
+            this.setState({
+                comment: ""
+            })
+        }
+    }
 
     renderExactRequest() {
         
@@ -312,7 +286,6 @@ class Request extends Component {
                             Новая заявка
                         </div>
                         <div>
-                            
                         </div>
                         <div>
                             <button className="close_btn" onClick={this.closeRequest}>&times;</button>
@@ -331,9 +304,7 @@ class Request extends Component {
                             <button onClick={this.submitNewRequest}>Сохранить</button>
                         </div>
                     </form>
-                   
-        
-            </div>
+                </div>
             );
         }
         else {
@@ -341,7 +312,6 @@ class Request extends Component {
             date = new Date(date);
             var days = date.getDate();
             var months = date.getMonth();
-            
             var years = date.getFullYear();
             if (days < 10) {
                 days = "0" + days;
@@ -350,8 +320,6 @@ class Request extends Component {
                 months = "0" + months;
             }
             date = days + "." + months + "." + years + "г." ;
-
-            
 
             return (
             <div className="request_grid">
@@ -376,10 +344,9 @@ class Request extends Component {
                             <p>Добавление комментариев</p>
                             <textarea onChange={this.handleComment} value={this.state.comment}></textarea>    
                         </div>
-                        <div><button onClick={this.putRequest}>Сохранить</button></div>
+                        <div><button onClick={this.saveComment}>Сохранить</button></div>
                     </div>
                     <div className="request_main_comments">
-                        
                         <div className="request_main_comment">
                             {this.outputComments(request.lifetimeItems)}
                         </div>
@@ -389,7 +356,6 @@ class Request extends Component {
                     <div>
                         <div className="aside_status" style={{backgroundColor: request.statusRgb}}></div>
                         <div>
-                            {/* {request.statusName} */}
                             <form>
                                 <select value={this.state.selectedStatus} onChange={this.handleStatus}>
                                     <option value={request.statusName}>{request.statusName}</option>
@@ -409,11 +375,10 @@ class Request extends Component {
                     <div>
                         <div>Исполнитель</div>
                         <div>
-                            {/* {request.executorName} */}
                             <form>
                                 <select value={this.state.selectedExecutor} onChange={this.handleExecutor}>
                                     <option key={request.executorId} value={request.executorName}>{request.executorName}</option>
-                                    {this.outputExecutor(request.executorId)}
+                                    { this.outputExecutor(request.executorId)}
                                 </select>
                             </form>
                         </div>
@@ -431,7 +396,6 @@ class Request extends Component {
                         <div>{this.outputTags(request.tags)}</div>
                     </div>
                 </div>
-        
             </div>
             )
         }
@@ -445,7 +409,6 @@ class Request extends Component {
         }
         else {
             if(this.state.isOpen) {
-                console.log("HERE")
                 this.closeRequest();
                 return (
                     <></>
@@ -454,19 +417,13 @@ class Request extends Component {
             else {
                 return(
                     <>
-                        <div className="content_request">
+                        <div key={req.id} className="content_request">
                             {this.renderExactRequest()}
-                            {/* {this.openModal()} */}
                         </div>
-                        
                     </>
                 );
             }
-            
         }
-        
-      
-        
     }
 }
 

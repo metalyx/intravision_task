@@ -39,6 +39,12 @@ class Main extends Component {
         this.props.fetchUsers();
     }
 
+    // componentDidUpdate() {
+        
+    //     this.props.fetchRequests();
+        
+        
+    // }
 
     render () {
         

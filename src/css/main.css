@@ -20,11 +20,9 @@ body {
 .menu {
     grid-area: menu;
 }
-
 .content {
     grid-area: content;
 }
-
 .search {
     grid-area: search;
     

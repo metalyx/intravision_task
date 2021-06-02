@@ -193,7 +193,9 @@ export const postNewRequest = (data) => (dispatch) => {
         
         .then(result => dispatch(getExactRequest(result)))
         .then(result => dispatch(addExactRequest(result.payload)))
-        
+        .then(
+                () => dispatch(fetchRequests())
+            )
         .catch(error => dispatch(exactRequestFailed(error.message)));
 }
 
@@ -236,9 +238,10 @@ export const usersLoading = () => ({
 
 // пуш заявки после редактирования
 export const putRequest = (data) => (dispatch) => {
+    const data_put = JSON.stringify(data);
     return fetch(api_putRequest, {
         method: 'PUT',
-        body: data,
+        body: data_put,
         headers: {
             'Content-Type': 'application/json'
         }
@@ -246,7 +249,7 @@ export const putRequest = (data) => (dispatch) => {
     .then(response => {
         if(response.ok) {
             // return response;
-            window.location.reload();
+            // window.location.reload();
         }
         else {
             var error = new Error('SERVER ERROR ' + response.status + ': ' + response.statusText);
@@ -259,6 +262,12 @@ export const putRequest = (data) => (dispatch) => {
         var errmess = new Error(error.message);
         throw errmess;
     })
+    .then(
+        () => dispatch(getExactRequest(data.id))
+    )
+    .then(
+        () => dispatch(fetchRequests())
+    )
     
      
 }
