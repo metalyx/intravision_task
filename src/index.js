@@ -3,11 +3,15 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
+import { ConfigureStore } from './redux/configureStore';
+import { Provider } from 'react-redux';
+const store = ConfigureStore();
 ReactDOM.render(
   <React.StrictMode>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
