@@ -32,7 +32,6 @@ function printMonth(months) {
 }
 
 export default function OutputDate(props) {
-    // const date = new Date(props.date);
     let date = props.date;
     if (date === null) {
         return "-"

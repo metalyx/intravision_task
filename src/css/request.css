@@ -7,8 +7,9 @@
 }
 
 .request_grid {
-    width: 100%;
+    width: 900px;
     
+    height: 100%;
     display: grid;
     grid-template-columns: 1fr 240px;
     grid-template-rows: 60px 600px;
@@ -16,7 +17,7 @@
                         "header header"
                         "main aside";
     overflow-y: scroll;
-
+    background-color: #ecf3f7;
 }
 .request_grid::-webkit-scrollbar {
     width: 0;
@@ -78,6 +79,7 @@
 .request_main_comments {
     display: flex;
     flex-direction: column;
+    background-color: #ecf3f7;
 }
 .request_main_comment div {
     margin: 10px;

@@ -1,7 +1,8 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import Loading from '../Loading';
-import { closeChangeRequest, getExactRequest, openChangeRequest } from '../redux/actions';
+import { closeChangeRequest, getExactRequest, openChangeRequest } from '../redux/exactRequest/actions';
+// import { closeChangeRequest, getExactRequest, openChangeRequest } from '../redux/actions';
 
 export default function RenderRequest(props) {
     
@@ -15,9 +16,7 @@ export default function RenderRequest(props) {
         dispatch(openChangeRequest());
     }
 
-    if (props.requests) {
-
-        
+    if (props.requests) { 
         const requests = props.requests.requests.value;
         const priorities = props.priorities.priorities;
         if(requests !== undefined){
@@ -28,8 +27,6 @@ export default function RenderRequest(props) {
                 }
                 else {
                     color = color.rgb;
-                
-                
                     return (
                         <div onClick={() => openExactRequest(item.id)} key={item.id}  className="content_request__card">
                             <div style={{backgroundColor: color}}></div>
@@ -38,7 +35,6 @@ export default function RenderRequest(props) {
                             <div><span className="request_span" style={{background: item.statusRgb}}>{item.statusName}</span></div>
                             <div>{item.executorName}</div>
                         </div>
-                        
                     );
                 }
             }); 
@@ -46,7 +42,6 @@ export default function RenderRequest(props) {
         }
         else {
             return <Loading />;
-            
         }   
     }
     else {
