@@ -32,7 +32,15 @@ function printMonth(months) {
 }
 
 export default function OutputDate(props) {
-    const date = props.date;
+    // const date = new Date(props.date);
+    let date = props.date;
+    if (date === null) {
+        return "-"
+    }
+    date = new Date(date);
+   
+    
+    const notComment = props.notComment;
     let days = date.getDate();
     let months = date.getMonth();
     let hours = date.getHours();
@@ -41,6 +49,14 @@ export default function OutputDate(props) {
     if (minutes < 10) {
         minutes = "0" + minutes;
     }
-    let result = days + " " + months + ", " + hours + ":" + minutes + " прокомментировал";
+    if (notComment) {
+        let years = date.getFullYear();
+        
+        var result = days + " " + months + " " + years + "г.";
+    }
+    else{
+        var result = days + " " + months + ", " + hours + ":" + minutes + " прокомментировал";
+    }
+    
     return result;
 }

@@ -1,14 +1,23 @@
-import React, {Component, useState} from 'react';
+import React, {Component, useCallback, useEffect, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import OutputComments from './components/Request/OutputComments';
+import OutputDate from './components/Request/OutputDate';
+import OutputOptions from './components/Request/OutputOptions';
+import OutputTags from './components/Request/OutputTags';
 import './css/request.css';
-import { closeChangeRequest } from './redux/actions';
+import Loading from './Loading';
+import { closeChangeRequest, putRequest } from './redux/actions';
 
+var _id = -1;
 
 export default function Request() {
 
     const dispatch = useDispatch();
     const request = useSelector(state => state.exactRequest.request);
+    const status = useSelector(state => state.status.status);
+    const users = useSelector(state => state.users.users);
+
+    
     const initialState = {
         comment: "",
         selectedStatus: request.statusName,
@@ -17,28 +26,51 @@ export default function Request() {
     };
 
     const [thestate, setState] = useState(initialState);
+
+    useEffect(() => {
+        if(_id !== request.id) {
+            _id = request.id;
+            setState({
+                comment: "",
+                selectedStatus: request.statusName,
+                selectedExecutor: request.executorName
+            })
+        }
+
+    }, [request.id])
+
     if (request.length === 0 || request === undefined) {
-        return <></>
+        return <Loading />
     }
     else {
-    
-        
-    
-   
-    
-    function closeRequest() {
-        dispatch(closeChangeRequest());
-    }
 
-    function handleComment({target: {value}}) {
-        setState({
-            ...thestate,
-            comment: value
-        });
-    }
+   function  getStatusId (statusName) {
+       let exactStatus = status.filter((item) => item.name === statusName)[0];
+       return exactStatus.id;
+   }
+   function  getExecutorId (executorName) {
+    let exactExecutor = users.filter((item) => item.name === executorName)[0];
+    return exactExecutor.id;
+}
 
     function saveComment() {
+        let comment = thestate.comment;
+            if (comment !== "" && comment !== undefined) {
+                let result = {
+                    comment: comment,
+                    id: request.id,
+                    statusId: getStatusId(thestate.selectedStatus),
+                    executorId: getExecutorId(thestate.selectedExecutor)
 
+                }
+                
+                dispatch(putRequest(result));
+                
+                setState({
+                    ...thestate,
+                    comment: ""
+                })
+            }
     }
 
     function handleStatus({target: {value}}) {
@@ -55,14 +87,14 @@ export default function Request() {
         });
     }
 
-    // Создать компонент OutputComments
-    // Создать компонент OutputSelect
-    // Создать компонент OutputExecutor
-    // Создать компонент OutputTags
-    // Создать компонент OutputDate
-    
+    function handleComment({target: {value}}) {
+        setState({
+            ...thestate,
+            comment: value
+        });
+    }
+
         return (
-        
             <div className="request_grid">
                 <div className="request_header">
                     <div>
@@ -72,7 +104,7 @@ export default function Request() {
                         {request.name}
                     </div>
                     <div>
-                        <button className="close_btn" onClick={() => closeRequest}>&times;</button>
+                        <button className="close_btn" onClick={() => dispatch(closeChangeRequest())}>&times;</button>
                     </div>
                 </div>
                 <div className="request_main">
@@ -83,9 +115,9 @@ export default function Request() {
                     <div>
                         <div>
                             <p>Добавление комментариев</p>
-                            <textarea onChange={() => handleComment} value={thestate.comment}></textarea>    
+                            <textarea onChange={handleComment} value={thestate.comment}></textarea>    
                         </div>
-                        <div><button onClick={() => saveComment}>Сохранить</button></div>
+                        <div><button onClick={() => saveComment()}>Сохранить</button></div>
                     </div>
                     <div className="request_main_comments">
                         <div className="request_main_comment">
@@ -98,9 +130,10 @@ export default function Request() {
                         <div className="aside_status" style={{backgroundColor: request.statusRgb}}></div>
                         <div>
                             <form>
-                                <select value={thestate.selectedStatus} onChange={() => handleStatus}>
+                                <select value={thestate.selectedStatus} onChange={handleStatus}>
                                     <option value={request.statusName}>{request.statusName}</option>
-                                    {/* {this.outputSelect(request.statusId)} */}
+                                    <OutputOptions array={status} selectedId={request.statusId}/>
+                                    
                                 </select>
                             </form>
                         </div>
@@ -117,9 +150,10 @@ export default function Request() {
                         <div>Исполнитель</div>
                         <div>
                             <form>
-                                <select value={thestate.selectedExecutor} onChange={() => handleExecutor}>
+                                <select value={thestate.selectedExecutor} onChange={handleExecutor}>
                                     <option key={request.executorId} value={request.executorName}>{request.executorName}</option>
-                                    {/* { this.outputExecutor(request.executorId)} */}
+                                   
+                                    <OutputOptions array={users} selectedId={request.executorId} />
                                 </select>
                             </form>
                         </div>
@@ -130,11 +164,12 @@ export default function Request() {
                     </div>
                     <div>
                         <div>Срок</div>
-                        {/* <div>{date}</div> */}
+                        <div>{<OutputDate date={request.resolutionDatePlan} notComment={true} />}</div>
                     </div>
                     <div className="req_tags">
                         <div>Теги</div>
-                        {/* <div>{this.outputTags(request.tags)}</div> */}
+                        
+                        <div><OutputTags tags={request.tags}/></div>
                     </div>
                 </div>
             </div>

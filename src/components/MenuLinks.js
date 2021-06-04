@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import logo from '../shared/images/logo.png';
+
 import base from '../shared/images/base.png';
 import req from '../shared/images/req.png';
 import workers from '../shared/images/workers.png';
