@@ -4,7 +4,7 @@ export default function Mock(props) {
     return (
         
         <>
-            <h1 style={{margin: "15px"}}>123123</h1>
+            <h1 style={{margin: "15px"}}>{props.data}</h1>
         </>
     );
 }

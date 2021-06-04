@@ -10,6 +10,7 @@ import { closeChangeRequest, putRequest } from './redux/actions';
 
 var _id = -1;
 
+
 export default function Request() {
 
     const dispatch = useDispatch();
@@ -24,34 +25,50 @@ export default function Request() {
         selectedExecutor: request.executorName
 
     };
-
+   
     const [thestate, setState] = useState(initialState);
 
+    function  getStatusId (statusName) {
+        let exactStatus = status.filter((item) => item.name === statusName)[0];
+        return exactStatus.id;
+     }
+     function  getExecutorId (executorName) {
+     let exactExecutor = users.filter((item) => item.name === executorName)[0];
+     return exactExecutor.id;
+     }
+    
+    useEffect (() => {
+        setState({
+            ...thestate,
+            selectedStatus: request.statusName,
+            selectedExecutor: request.executorName
+        })
+    }, [request.statusName, request.executorName]);
+
     useEffect(() => {
-        if(_id !== request.id) {
-            _id = request.id;
-            setState({
-                comment: "",
-                selectedStatus: request.statusName,
-                selectedExecutor: request.executorName
-            })
+        console.log("1")
+        if(thestate.selectedStatus !== request.statusName && thestate.selectedStatus !== undefined) {
+            let result = {
+                id: request.id,
+                statusId: getStatusId(thestate.selectedStatus),
+                executorId: getExecutorId(thestate.selectedExecutor)
+            }
+            dispatch(putRequest(result));
         }
+        if(thestate.selectedExecutor !== request.executorName && thestate.selectedExecutor !== undefined) {
+            let result = {
+                id: request.id,
+                statusId: getStatusId(thestate.selectedStatus),
+                executorId: getExecutorId(thestate.selectedExecutor)
+            }
+            dispatch(putRequest(result));
+        }   
+    }, [thestate.selectedStatus, thestate.selectedExecutor])
 
-    }, [request.id])
-
-    if (request.length === 0 || request === undefined) {
+    if (thestate.selectedStatus === undefined) {
         return <Loading />
     }
     else {
-
-   function  getStatusId (statusName) {
-       let exactStatus = status.filter((item) => item.name === statusName)[0];
-       return exactStatus.id;
-   }
-   function  getExecutorId (executorName) {
-    let exactExecutor = users.filter((item) => item.name === executorName)[0];
-    return exactExecutor.id;
-}
 
     function saveComment() {
         let comment = thestate.comment;
@@ -73,11 +90,20 @@ export default function Request() {
             }
     }
 
-    function handleStatus({target: {value}}) {
+    function handleStatus(e) {
+        
+        let value = e.target.value;
         setState({
             ...thestate,
             selectedStatus: value
         });
+        
+        
+        if (thestate.selectedStatus !== request.statusName) {
+            
+            
+        }
+        
     }
 
     function handleExecutor ({target: {value}}) {
@@ -85,6 +111,14 @@ export default function Request() {
             ...thestate,
             selectedExecutor: value
         });
+        if (thestate.selectedExecutor !== request.executorName) {
+            let result = {
+                id: request.id,
+                statusId: getStatusId(thestate.selectedStatus),
+                executorId: getExecutorId(thestate.selectedExecutor)
+            }
+            dispatch(putRequest(result));
+        }
     }
 
     function handleComment({target: {value}}) {
@@ -133,7 +167,6 @@ export default function Request() {
                                 <select value={thestate.selectedStatus} onChange={handleStatus}>
                                     <option value={request.statusName}>{request.statusName}</option>
                                     <OutputOptions array={status} selectedId={request.statusId}/>
-                                    
                                 </select>
                             </form>
                         </div>
@@ -152,7 +185,6 @@ export default function Request() {
                             <form>
                                 <select value={thestate.selectedExecutor} onChange={handleExecutor}>
                                     <option key={request.executorId} value={request.executorName}>{request.executorName}</option>
-                                   
                                     <OutputOptions array={users} selectedId={request.executorId} />
                                 </select>
                             </form>
