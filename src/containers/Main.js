@@ -1,9 +1,9 @@
-import React, {Component, useEffect} from 'react';
+import React from 'react';
 import Menu from './Menu';
 import Search from './Search';
-import './css/main.css';
+import '../css/main.css';
 import { Redirect, Route, BrowserRouter as Router, Switch } from 'react-router-dom';
-import Mock from './components/Mock';
+import Mock from '../components/menu/Mock';
 import Content from './Content';
 
 export default function Main() {

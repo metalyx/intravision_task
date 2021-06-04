@@ -1,12 +1,12 @@
 import React, {Component, useCallback, useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import RenderRequest from './components/RenderRequest';
-import './css/content.css'
-import { closeChangeRequest, getExactRequest, openChangeRequest } from './redux/exactRequest/actions';
-import { fetchPriorities } from './redux/priorities/actions';
-import { fetchRequests } from './redux/requests/actions';
-import { fetchStatus } from './redux/status/actions';
-import { fetchUsers } from './redux/users/actions';
+import RenderRequest from './RenderRequest';
+import '../css/content.css'
+import { closeChangeRequest, getExactRequest, openChangeRequest } from '../redux/exactRequest/actions';
+import { fetchPriorities } from '../redux/priorities/actions';
+import { fetchRequests } from '../redux/requests/actions';
+import { fetchStatus } from '../redux/status/actions';
+import { fetchUsers } from '../redux/users/actions';
 
 import Request from './Request';
 

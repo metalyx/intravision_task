@@ -2,12 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 
-import base from '../shared/images/base.png';
-import req from '../shared/images/req.png';
-import workers from '../shared/images/workers.png';
-import clients from '../shared/images/clients.png';
-import finance from '../shared/images/finance.png';
-import options from '../shared/images/options.png';
+import base from '../../shared/images/base.png';
+import req from '../../shared/images/req.png';
+import workers from '../../shared/images/workers.png';
+import clients from '../../shared/images/clients.png';
+import finance from '../../shared/images/finance.png';
+import options from '../../shared/images/options.png';
 
 export default function MenuLinks() {
     return (

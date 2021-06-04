@@ -1,14 +1,14 @@
 import React, { useEffect, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import NewRequest from './components/Request/NewRequest';
-import OutputComments from './components/Request/OutputComments';
-import OutputDate from './components/Request/OutputDate';
-import OutputOptions from './components/Request/OutputOptions';
-import OutputTags from './components/Request/OutputTags';
-import './css/request.css';
-import Loading from './Loading';
+import NewRequest from './../components/request/NewRequest';
+import OutputComments from './../components/request/OutputComments';
+import OutputDate from './../components/request/OutputDate';
+import OutputOptions from './../components/request/OutputOptions';
+import OutputTags from './../components/request/OutputTags';
+import '../css/request.css';
 
-import { closeChangeRequest, putRequest } from './redux/exactRequest/actions';
+
+import { closeChangeRequest, putRequest } from '../redux/exactRequest/actions';
 
 var _id = -1;
 
